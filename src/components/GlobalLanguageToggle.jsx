@@ -2,7 +2,7 @@ import LanguageToggle from './LanguageToggle';
 
 function GlobalLanguageToggle() {
   return (
-    <div className="fixed bottom-4 left-4 z-50">
+    <div className="fixed bottom-4 right-25 z-50">
       <LanguageToggle />
     </div>
   );
