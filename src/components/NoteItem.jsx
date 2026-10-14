@@ -4,6 +4,7 @@ import { Calendar, Ellipsis } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { showFormattedDate } from '../utils';
+import useLanguage from '../hooks/useLanguage';
 
 function NoteItem({
   noteId,
@@ -16,6 +17,7 @@ function NoteItem({
   archived,
 }) {
   const [isEllipsisClicked, setIsEllipsisClicked] = useState(false);
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const handleCardClick = (noteId) => {
     navigate(`/notes/${noteId}`);
@@ -63,7 +65,7 @@ function NoteItem({
             }}
             className="rounded-md block w-full text-left px-4 py-2 text-sm text-text-muted hover:bg-primary-soft transition-all"
           >
-            {archived ? 'Batal Arsip' : 'Arsipkan'}
+            {archived ? t('note_unarchive') : t('note_archive')}
           </button>
           <button
             onClick={(e) => {
@@ -72,7 +74,7 @@ function NoteItem({
             }}
             className="rounded-md block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-primary-soft transition-all"
           >
-            Hapus
+            {t('note_delete')}
           </button>
         </div>
       )}

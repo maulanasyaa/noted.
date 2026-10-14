@@ -10,11 +10,13 @@ import NoteList from '../components/NoteList';
 import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
+import useLanguage from '../hooks/useLanguage';
 import useNotes from '../hooks/useNotes';
 
 function Home() {
   // notes data
   const { addNote, deleteNote, archiveNote, activeNotes, isLoading } = useNotes();
+  const { t } = useLanguage();
   const [modalAddNote, setModalAddNote] = useState(false);
 
   // state for search params
@@ -88,7 +90,7 @@ function Home() {
       <Sidebar handleLogout={() => setConfirmLogout(true)} />
       <div className="flex-1 min-h-screen p-8">
         <Header
-          headerTitle="Semua Catatan"
+          headerTitle={t('home_title')}
           totalNotes={filteredNotes.length}
           handleClick={handleAddButtonClick}
           keyword={keyword}
@@ -101,7 +103,7 @@ function Home() {
           ) : (
             <NoteList
               notes={filteredNotes}
-              emptyMessage="Tidak ada catatan"
+              emptyMessage={t('notes_empty')}
               onDelete={handleDeleteNote}
               onArchive={handleArchiveNote}
             />
@@ -120,10 +122,10 @@ function Home() {
             className="bg-surface p-6 rounded-lg shadow-lg w-96"
           >
             <h2 className="text-xl text-text-primary font-bold">
-              Tambah Catatan Baru
+              {t('add_note_title')}
             </h2>
             <p className="text-text-muted text-sm">
-              Isi detail catatan barumu.
+              {t('add_note_description')}
             </p>
             <form
               onSubmit={handleAddNoteSubmit}
@@ -131,13 +133,13 @@ function Home() {
             >
               <input
                 type="text"
-                placeholder="Judul"
+                placeholder={t('add_note_field_title')}
                 value={noteTitle}
                 onChange={(e) => setNoteTitle(e.target.value)}
                 className="border border-border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <textarea
-                placeholder="Isi catatan"
+                placeholder={t('add_note_field_body')}
                 value={noteBody}
                 onChange={(e) => setNoteBody(e.target.value)}
                 className="border border-border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none h-32"
@@ -146,7 +148,7 @@ function Home() {
                 type="submit"
                 className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-all"
               >
-                Tambah Catatan
+                {t('add_note_submit')}
               </button>
             </form>
           </div>

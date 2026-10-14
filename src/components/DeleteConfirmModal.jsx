@@ -1,4 +1,8 @@
+import useLanguage from '../hooks/useLanguage';
+
 function DeleteConfirmModal({ onConfirm, onCancel }) {
+  const { t } = useLanguage();
+
   return (
     <div
       onClick={onCancel}
@@ -8,23 +12,22 @@ function DeleteConfirmModal({ onConfirm, onCancel }) {
         onClick={(e) => e.stopPropagation()}
         className="bg-surface p-6 rounded-lg shadow-lg w-96"
       >
-        <h2 className="text-xl text-text-primary font-bold">Hapus Catatan</h2>
-        <p className="text-text-muted text-sm">
-          Apakah Anda yakin ingin menghapus catatan ini? Tindakan ini tidak
-          dapat dibatalkan.
-        </p>
+        <h2 className="text-xl text-text-primary font-bold">
+          {t('delete_title')}
+        </h2>
+        <p className="text-text-muted text-sm">{t('delete_description')}</p>
         <div className="mt-4 flex justify-end gap-4">
           <button
             onClick={onCancel}
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-all"
           >
-            Batal
+            {t('button_cancel')}
           </button>
           <button
             onClick={onConfirm}
             className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
           >
-            Hapus
+            {t('button_delete')}
           </button>
         </div>
       </div>

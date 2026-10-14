@@ -1,10 +1,12 @@
-const ARCHIVE_DESCRIPTION =
-  'Apakah Anda yakin ingin mengarsipkan catatan ini? Anda dapat menemukannya di bagian arsip.';
-
-const UNARCHIVE_DESCRIPTION =
-  'Apakah Anda yakin ingin membatalkan arsip catatan ini? Catatan akan dikembalikan ke daftar catatan utama.';
+import useLanguage from '../hooks/useLanguage';
 
 function ArchiveConfirmModal({ archived, description, onConfirm, onCancel }) {
+  const { t } = useLanguage();
+
+  const fallbackDescription = archived
+    ? t('unarchive_description')
+    : t('archive_description');
+
   return (
     <div
       onClick={onCancel}
@@ -15,24 +17,23 @@ function ArchiveConfirmModal({ archived, description, onConfirm, onCancel }) {
         className="bg-surface p-6 rounded-lg shadow-lg w-96"
       >
         <h2 className="text-xl text-text-primary font-bold">
-          {archived ? 'Batal Arsip Catatan' : 'Arsipkan Catatan'}
+          {archived ? t('unarchive_title_action') : t('archive_title_action')}
         </h2>
         <p className="text-text-muted text-sm">
-          {description ??
-            (archived ? UNARCHIVE_DESCRIPTION : ARCHIVE_DESCRIPTION)}
+          {description ?? fallbackDescription}
         </p>
         <div className="mt-4 flex justify-end gap-4">
           <button
             onClick={onCancel}
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-all"
           >
-            Batal
+            {t('button_cancel')}
           </button>
           <button
             onClick={onConfirm}
             className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-all"
           >
-            {archived ? 'Batal Arsip' : 'Arsipkan'}
+            {archived ? t('button_unarchive') : t('button_archive')}
           </button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
+import LanguageProvider from './contexts/LanguageProvider.jsx';
 import NotesProvider from './contexts/NotesProvider.jsx';
 import ThemeProvider from './contexts/ThemeProvider.jsx';
 import './index.css';
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <AuthProvider>
           <NotesProvider>
-            <App />
+            <LanguageProvider>
+              <App />
+            </LanguageProvider>
           </NotesProvider>
         </AuthProvider>
       </BrowserRouter>

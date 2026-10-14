@@ -1,6 +1,10 @@
 import { NotebookPen } from 'lucide-react';
 
+import useLanguage from '../hooks/useLanguage';
+
 function LoginLoadingModal() {
+  const { t } = useLanguage();
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4 backdrop-blur-[3px]"
@@ -47,11 +51,11 @@ function LoginLoadingModal() {
 
         {/* Loading message */}
         <h2 className="text-xl font-bold text-text-primary">
-          Getting things ready
+          {t('login_loading_title')}
         </h2>
 
         <p className="mt-2 text-sm leading-6 text-text-secondary">
-          Preparing your little space of thoughts...
+          {t('login_loading_description')}
         </p>
 
         {/* Progress indicator */}

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
+import useLanguage from '../hooks/useLanguage';
 
 function NotFound() {
+  const { t } = useLanguage();
+
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -94,17 +97,15 @@ function NotFound() {
           {/* Content */}
           <div className="space-y-3">
             <p className="text-sm font-semibold uppercase tracking-wider text-primary">
-              Halaman Tidak Ditemukan
+              {t('notfound_title')}
             </p>
 
             <h1 className="text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
-              Oops, sepertinya halaman yang Anda cari tidak ada.
+              {t('notfound_heading')}
             </h1>
 
             <p className="mx-auto max-w-md text-base leading-7 text-text-secondary">
-              Halaman yang Anda coba akses mungkin telah dihapus, atau alamat
-              URL yang Anda masukkan salah. Silakan periksa kembali alamat URL
-              atau kembali ke beranda.
+              {t('notfound_description')}
             </p>
           </div>
 
@@ -130,7 +131,7 @@ function NotFound() {
                 focus:ring-offset-background
               "
             >
-              Kembali ke Beranda
+              {t('notfound_back_home')}
             </Link>
           </div>
         </div>

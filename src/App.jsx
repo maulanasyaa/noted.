@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import GlobalThemeToggle from './components/GlobalThemeToggle';
+import GlobalLanguageToggle from './components/GlobalLanguageToggle';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicOnlyRoute from './components/PublicOnlyRoute';
 import Archive from './pages/Archive';
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <GlobalThemeToggle />
+      <GlobalLanguageToggle />
       <Routes>
         {/* protected routes */}
         <Route element={<ProtectedRoute />}>
