@@ -1,4 +1,4 @@
-import { NotebookPen, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 function NoteDetailLoader() {
   return (
