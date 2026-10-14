@@ -2,9 +2,11 @@ import { Archive, House, LogOut, NotebookPen, UserKey } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
+import useLanguage from '../hooks/useLanguage';
 
 function Sidebar({ handleLogout }) {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   return (
     <aside className="flex flex-col text-primary min-h-screen w-54 bg-surface p-4 shrink-0">
@@ -25,7 +27,7 @@ function Sidebar({ handleLogout }) {
           }
         >
           <House size={18} />
-          <span>Beranda</span>
+          <span>{t('sidebar_home')}</span>
         </NavLink>
 
         {/* menu archive */}
@@ -40,14 +42,14 @@ function Sidebar({ handleLogout }) {
           }
         >
           <Archive size={18} />
-          <span>Arsip</span>
+          <span>{t('sidebar_archive')}</span>
         </NavLink>
       </div>
       <div className="mt-auto flex items-center justify-center gap-6 bg-primary-soft p-2 rounded-2xl mb-2 h-20">
         <UserKey className="text-icon" size={25} />
         <div className="flex flex-col">
           <span className="text-text-primary font-semibold text-sm">
-            Hai, {user?.name}!
+            {t('sidebar_greeting', { name: user?.name })}
           </span>
           <span className="text-text-muted text-xs">{user?.email}</span>
         </div>
@@ -56,7 +58,7 @@ function Sidebar({ handleLogout }) {
         className="flex items-center justify-center bg-primary text-md text-white rounded-lg h-8 cursor-pointer hover:bg-primary-hover transition-all gap-2"
         onClick={handleLogout}
       >
-        Logout
+        {t('sidebar_logout')}
         <LogOut size={15} />
       </button>
     </aside>

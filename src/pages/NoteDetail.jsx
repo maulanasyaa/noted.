@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import ArchiveConfirmModal from '../components/ArchiveConfirmModal';
 import NoteDetailLoader from '../components/NoteDetailLoader';
+import useLanguage from '../hooks/useLanguage';
 
 function NoteDetailHeader({
   handleDelete,
@@ -16,6 +17,7 @@ function NoteDetailHeader({
   archived,
 }) {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const handleBackClick = () => {
     navigate('/');
   };
@@ -28,7 +30,7 @@ function NoteDetailHeader({
           className="text-text-muted flex text-sm gap-2 items-center w-50 border border-transparent hover:border-border hover:shadow-sm p-2 rounded transition-all cursor-pointer"
         >
           <MoveLeft size={18} />
-          <span>Kembali ke Beranda</span>
+          <span>{t('detail_back_home')}</span>
         </button>
         <div className="flex gap-2">
           <button
@@ -37,7 +39,7 @@ function NoteDetailHeader({
           >
             <Archive size={18} className="text-text-muted" />
             <span className="text-text-muted text-sm ml-2">
-              {archived ? 'Batal Arsip' : 'Arsipkan'}
+              {archived ? t('note_unarchive') : t('note_archive')}
             </span>
           </button>
           <button
@@ -45,7 +47,7 @@ function NoteDetailHeader({
             className="bg-red-500 text-white flex text-sm gap-2 items-center hover:shadow-sm active:translate-y-0.5 p-2 rounded transition-all cursor-pointer"
           >
             <Trash size={18} />
-            <span className="text-sm ml-2">Hapus</span>
+            <span className="text-sm ml-2">{t('note_delete')}</span>
           </button>
         </div>
       </div>

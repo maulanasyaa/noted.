@@ -13,10 +13,12 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from '../hooks/useInput';
+import useLanguage from '../hooks/useLanguage';
 import { register } from '../utils/network-data';
 
 function Register() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -172,24 +174,20 @@ function Register() {
           </svg>
 
           <h1 className="text-4xl font-semibold tracking-tight text-text-primary">
-            Capture Your Thoughts
+            {t('register_intro_title')}
           </h1>
 
           <p className="mt-4 max-w-md text-lg leading-7 text-text-secondary">
-            Organize your notes, boost your productivity, and never lose an
-            important idea again.
+            {t('register_intro_extra')}
           </p>
         </section>
 
         {/* Right: Registration modal */}
         <section className="mx-auto w-full max-w-md rounded-2xl border border-border bg-surface/80 p-8 shadow-sm backdrop-blur-sm">
           <h2 className="text-2xl font-semibold text-text-primary mb-2">
-            Create Your Account
+            {t('register_form_title')}
           </h2>
-          <p className="text-text-muted mb-8">
-            Join <span className="font-semibold">Noted.</span> and start saving
-            your thoughts in one place.
-          </p>
+          <p className="text-text-muted mb-8">{t('register_form_description')}</p>
           <form action="submit" onSubmit={handleSubmit}>
             {/* full name field */}
             <div className="flex flex-col gap-2 mb-3">
@@ -197,7 +195,7 @@ function Register() {
                 htmlFor="full_name"
                 className="text-text-secondary font-bold"
               >
-                Full Name
+                {t('register_name_label')}
               </label>
               <div className="flex items-center border border-border rounded-md px-3 py-2 gap-2 focus-within:ring-2 focus-within:ring-primary">
                 <UserRound className="text-icon" size={20} />
@@ -206,7 +204,7 @@ function Register() {
                   id="full_name"
                   name="full_name"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your name"
+                  placeholder={t('register_name_placeholder')}
                   required
                   value={fullName}
                   onChange={onFullNameChange}
@@ -217,7 +215,7 @@ function Register() {
             {/* email field */}
             <div className="flex flex-col gap-2 mb-3">
               <label htmlFor="email" className="text-text-secondary font-bold">
-                Email
+                {t('register_email_label')}
               </label>
               <div className="flex items-center border border-border rounded-md px-3 py-2 gap-2 focus-within:ring-2 focus-within:ring-primary">
                 <Mail className="text-icon" size={20} />
@@ -226,7 +224,7 @@ function Register() {
                   id="email"
                   name="email"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your email"
+                  placeholder={t('register_email_placeholder')}
                   required
                   value={email}
                   onChange={onEmailChange}
@@ -240,7 +238,7 @@ function Register() {
                 htmlFor="password"
                 className="text-text-secondary font-bold"
               >
-                Password
+                {t('register_password_label')}
               </label>
               <div className="flex items-center border border-border rounded-md px-3 py-2 gap-2 focus-within:ring-2 focus-within:ring-primary">
                 <LockKeyhole className="text-icon" size={20} />
@@ -249,7 +247,7 @@ function Register() {
                   id="password"
                   name="password"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your password"
+                  placeholder={t('register_password_placeholder')}
                   required
                   value={password}
                   onChange={onPasswordChange}
@@ -270,7 +268,7 @@ function Register() {
                 htmlFor="confirm_password"
                 className="text-text-secondary font-bold"
               >
-                Confirm Password
+                {t('register_confirm_label')}
               </label>
               <div
                 className={
@@ -285,7 +283,7 @@ function Register() {
                   id="confirm_password"
                   name="confirm_password"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your password"
+                  placeholder={t('register_confirm_placeholder')}
                   required
                   value={confirmPassword}
                   onChange={onConfirmPasswordChange}
@@ -313,11 +311,11 @@ function Register() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 inline-block animate-spin" size={16} />
-                  Creating account
+                  {t('register_creating')}
                 </>
               ) : (
                 <>
-                  Register
+                  {t('register_submit')}
                   <ArrowRight
                     className="ml-2 inline-block animate-arrow-right"
                     size={16}
@@ -328,12 +326,12 @@ function Register() {
           </form>
           <hr className="my-4 border-border" />
           <p className="mt-4 text-center text-sm text-text-muted">
-            Already have an account?{' '}
+            {t('register_has_account')}{' '}
             <Link
               to="/login"
               className="text-primary hover:underline font-bold"
             >
-              Login
+              {t('register_login_link')}
             </Link>
           </p>
         </section>

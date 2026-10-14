@@ -10,10 +10,12 @@ import NoteList from '../components/NoteList';
 import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
+import useLanguage from '../hooks/useLanguage';
 import useNotes from '../hooks/useNotes';
 
 function Archive() {
   const { deleteNote, unarchiveNote, archivedNotes, isLoading } = useNotes();
+  const { t } = useLanguage();
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,7 +70,7 @@ function Archive() {
       <Sidebar handleLogout={() => setConfirmLogout(true)} />
       <div className="flex-1 min-h-screen p-8">
         <Header
-          headerTitle="Catatan Arsip"
+          headerTitle={t('archive_title')}
           totalNotes={filteredNotes.length}
           keyword={keyword}
           onKeywordChange={handleKeywordChange}
@@ -80,7 +82,7 @@ function Archive() {
           ) : (
             <NoteList
               notes={filteredNotes}
-              emptyMessage="Arsip Kosong"
+              emptyMessage={t('archive_empty')}
               onDelete={handleDeleteNote}
               onUnarchive={handleUnarchiveNote}
             />
@@ -100,7 +102,7 @@ function Archive() {
       {confirmationUnarchiveModal && (
         <ArchiveConfirmModal
           archived
-          description="Apakah Anda yakin ingin mengeluarkan catatan ini dari arsip? Anda dapat menemukannya di bagian catatan utama."
+          description={t('unarchive_description')}
           onConfirm={confirmUnarchiveNote}
           onCancel={() => setConfirmationUnarchiveModal(false)}
         />

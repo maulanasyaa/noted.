@@ -7,10 +7,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import LoginLoadingModal from '../components/LoginLoadingModal';
 import useAuth from '../hooks/useAuth';
 import useInput from '../hooks/useInput';
+import useLanguage from '../hooks/useLanguage';
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
+  const { t } = useLanguage();
 
   //   state for form fields
   const [email, onEmailChange] = useInput('');
@@ -173,28 +175,25 @@ function Login() {
 
           {/* Intro text */}
           <h1 className="text-4xl font-semibold tracking-tight text-text-primary">
-            Welcome Back
+            {t('login_intro_title')}
           </h1>
 
           <p className="mt-4 max-w-sm text-lg leading-8 text-text-secondary">
-            Your thoughts, ideas, and plans are just a login away.
+            {t('login_intro_description')}
           </p>
         </section>
 
         {/* Right: Empty login modal */}
         <section className="mx-auto w-full max-w-md rounded-2xl border border-border bg-surface/80 p-8 shadow-sm backdrop-blur-sm">
           <h2 className="text-2xl font-semibold text-text-primary mb-2">
-            Create Your Account
+            {t('login_form_title')}
           </h2>
-          <p className="text-text-muted mb-8">
-            Join <span className="font-semibold">Noted.</span> and start saving
-            your thoughts in one place.
-          </p>
+          <p className="text-text-muted mb-8">{t('login_form_description')}</p>
           <form action="submit" onSubmit={handleSubmit}>
             {/* email field */}
             <div className="flex flex-col gap-2 mb-3">
               <label htmlFor="email" className="text-text-secondary font-bold">
-                Email
+                {t('login_email_label')}
               </label>
               <div className="flex items-center border border-border rounded-md px-3 py-2 gap-2 focus-within:ring-2 focus-within:ring-primary">
                 <Mail className="text-icon" size={20} />
@@ -203,7 +202,7 @@ function Login() {
                   id="email"
                   name="email"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your email"
+                  placeholder={t('login_email_placeholder')}
                   required
                   value={email}
                   onChange={onEmailChange}
@@ -217,7 +216,7 @@ function Login() {
                 htmlFor="password"
                 className="text-text-secondary font-bold"
               >
-                Password
+                {t('login_password_label')}
               </label>
               <div className="flex items-center border border-border rounded-md px-3 py-2 gap-2 focus-within:ring-2 focus-within:ring-primary">
                 <LockKeyhole className="text-icon" size={20} />
@@ -226,7 +225,7 @@ function Login() {
                   id="password"
                   name="password"
                   className="flex-1 bg-transparent text-sm outline-none placeholder:text-text-muted text-text-primary"
-                  placeholder="Enter your password"
+                  placeholder={t('login_password_placeholder')}
                   required
                   value={password}
                   onChange={onPasswordChange}
@@ -246,7 +245,7 @@ function Login() {
               type="submit"
               className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
             >
-              Login
+              {t('login_submit')}
               <ArrowRight
                 className="ml-2 inline-block animate-arrow-right"
                 size={16}
@@ -254,12 +253,12 @@ function Login() {
             </button>
             <hr className="my-4 border-border" />
             <p className="mt-4 text-center text-sm text-text-muted">
-              Don't have an account?{' '}
+              {t('login_no_account')}{' '}
               <Link
                 to="/register"
                 className="text-primary hover:underline font-bold"
               >
-                Register
+                {t('login_register_link')}
               </Link>
             </p>
           </form>
