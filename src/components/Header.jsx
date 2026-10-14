@@ -12,7 +12,12 @@ function SearchBar({ keyword, onKeywordChange }) {
     <form onSubmit={handleSubmit} role="search" className="w-full max-w-md">
       <div className="relative flex items-center text-text-muted">
         <Search size={18} className="absolute left-3 pointer-events-none" />
+        <label htmlFor="note-search" className="sr-only">
+          {t('header_search_label')}
+        </label>
         <input
+          id="note-search"
+          name="keyword"
           type="search"
           placeholder={t('header_search_placeholder')}
           value={keyword}
@@ -49,10 +54,10 @@ function Header({
         {showAddButton && (
           <button
             onClick={handleClick}
-            className="flex w-70 items-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg active:translate-y-0.5 hover:bg-primary-hover transition-all"
+            className="flex w-70 items-center gap-2 bg-primary text-text-on-primary text-sm font-medium px-4 py-2 rounded-lg active:translate-y-0.5 hover:bg-primary-hover transition-all"
           >
             <Plus size={18} />
-            <span className="text-sm text-white font-medium ml-2">
+            <span className="text-sm text-text-on-primary font-medium ml-2">
               {t('header_add_note')}
             </span>
           </button>

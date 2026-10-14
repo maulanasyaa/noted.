@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Calendar, Ellipsis } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { showFormattedDate } from '../utils';
 import useLanguage from '../hooks/useLanguage';
+import { showFormattedDate } from '../utils';
 
 function NoteItem({
   noteId,
@@ -17,7 +17,7 @@ function NoteItem({
   archived,
 }) {
   const [isEllipsisClicked, setIsEllipsisClicked] = useState(false);
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const navigate = useNavigate();
   const handleCardClick = (noteId) => {
     navigate(`/notes/${noteId}`);
@@ -46,7 +46,7 @@ function NoteItem({
       </div>
       <div className="flex items-center text-xs gap-2 text-text-muted justify-end">
         <Calendar size={15} />
-        <p>{showFormattedDate(createdAt)}</p>
+        <p>{showFormattedDate(createdAt, language)}</p>
       </div>
 
       {/* Ellipsis menu */}

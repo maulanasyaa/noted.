@@ -4,6 +4,12 @@
 // diganti via fungsi t() dengan parameter vars.
 
 const translations = {
+  // --- Document ---
+  document_title: {
+    id: 'Noted. - Aplikasi Catatan',
+    en: 'Noted. - Notes App',
+  },
+
   // --- Sidebar ---
   sidebar_home: { id: 'Beranda', en: 'Home' },
   sidebar_archive: { id: 'Arsip', en: 'Archive' },
@@ -12,6 +18,7 @@ const translations = {
 
   // --- Header ---
   header_search_placeholder: { id: 'Cari catatan...', en: 'Search notes...' },
+  header_search_label: { id: 'Cari catatan', en: 'Search notes' },
   header_add_note: { id: 'Tambah Catatan', en: 'Add Note' },
   header_total_notes: {
     id: 'Total [count] catatan',
@@ -33,6 +40,38 @@ const translations = {
   // --- NoteList empty state ---
   notes_empty: { id: 'Tidak ada catatan', en: 'No notes' },
   archive_empty: { id: 'Arsip Kosong', en: 'Archive is empty' },
+  notes_action_error: {
+    id: 'Operasi catatan gagal. Silakan coba lagi.',
+    en: 'The note operation failed. Please try again.',
+  },
+  note_load_error: {
+    id: 'Catatan gagal dimuat. Silakan coba lagi.',
+    en: 'The note could not be loaded. Please try again.',
+  },
+  auth_loading_status: {
+    id: 'Memeriksa ruang Anda...',
+    en: 'Checking your space...',
+  },
+  auth_loading_description: {
+    id: 'Memastikan semuanya siap untuk pikiran Anda.',
+    en: 'Making sure everything is ready for your thoughts.',
+  },
+  note_loading_label: {
+    id: 'Sedang memuat detail catatan',
+    en: 'Loading note details',
+  },
+  note_loading_title: {
+    id: 'Menyiapkan pikiran Anda',
+    en: 'Gathering your thoughts',
+  },
+  note_loading_description: {
+    id: 'Sebentar, kami sedang mencari catatan Anda ✨',
+    en: 'Just a little moment while we find your notes ✨',
+  },
+  note_loading_sr: {
+    id: 'Sedang mengambil data catatan...',
+    en: 'Fetching note data...',
+  },
 
   // --- NoteItem menu ---
   note_archive: { id: 'Arsipkan', en: 'Archive' },
@@ -46,6 +85,7 @@ const translations = {
     en: 'Are you sure you want to delete this note? This action cannot be undone.',
   },
   button_cancel: { id: 'Batal', en: 'Cancel' },
+  button_processing: { id: 'Memproses...', en: 'Processing...' },
   button_delete: { id: 'Hapus', en: 'Delete' },
 
   // --- ArchiveConfirmModal ---
@@ -85,23 +125,37 @@ const translations = {
     en: 'Welcome back! Please enter your details to access your notes.',
   },
   login_email_label: { id: 'Email', en: 'Email' },
-  login_email_placeholder: { id: 'Masukkan email Anda', en: 'Enter your email' },
+  login_email_placeholder: {
+    id: 'Masukkan email Anda',
+    en: 'Enter your email',
+  },
   login_password_label: { id: 'Kata Sandi', en: 'Password' },
   login_password_placeholder: {
     id: 'Masukkan kata sandi Anda',
     en: 'Enter your password',
   },
   login_submit: { id: 'Masuk', en: 'Login' },
+  login_loading_label: { id: 'Sedang memproses login', en: 'Processing login' },
+  login_illustration_label: {
+    id: 'Ilustrasi buku catatan, pena, dan tanaman',
+    en: 'Illustration of a notebook, pen, and plant',
+  },
   login_no_account: { id: 'Belum punya akun?', en: "Don't have an account?" },
   login_register_link: { id: 'Daftar', en: 'Register' },
-  login_loading_title: { id: 'Menyiapkan ruang Anda', en: 'Getting things ready' },
+  login_loading_title: {
+    id: 'Menyiapkan ruang Anda',
+    en: 'Getting things ready',
+  },
   login_loading_description: {
     id: 'Menyiapkan ruang kecil untuk pikiran Anda...',
     en: 'Preparing your little space of thoughts...',
   },
 
   // --- Register ---
-  register_intro_title: { id: 'Tangkap Pikiran Anda', en: 'Capture Your Thoughts' },
+  register_intro_title: {
+    id: 'Tangkap Pikiran Anda',
+    en: 'Capture Your Thoughts',
+  },
   register_intro_description: {
     id: 'Buat akun dan mulailah menyimpan ide dan rencana Anda di satu tempat.',
     en: 'Create an account and start saving your ideas and plans in one place.',
@@ -116,23 +170,47 @@ const translations = {
     en: 'Join Noted. and start saving your thoughts in one place.',
   },
   register_name_label: { id: 'Nama Lengkap', en: 'Full Name' },
-  register_name_placeholder: { id: 'Masukkan nama Anda', en: 'Enter your name' },
+  register_name_placeholder: {
+    id: 'Masukkan nama Anda',
+    en: 'Enter your name',
+  },
   register_email_label: { id: 'Email', en: 'Email' },
-  register_email_placeholder: { id: 'Masukkan email Anda', en: 'Enter your email' },
+  register_email_placeholder: {
+    id: 'Masukkan email Anda',
+    en: 'Enter your email',
+  },
   register_password_label: { id: 'Kata Sandi', en: 'Password' },
   register_password_placeholder: {
     id: 'Masukkan kata sandi',
     en: 'Enter your password',
   },
-  register_confirm_label: { id: 'Konfirmasi Kata Sandi', en: 'Confirm Password' },
+  register_confirm_label: {
+    id: 'Konfirmasi Kata Sandi',
+    en: 'Confirm Password',
+  },
   register_confirm_placeholder: {
     id: 'Konfirmasi kata sandi',
     en: 'Confirm your password',
   },
+  register_password_mismatch: {
+    id: 'Kata sandi tidak cocok.',
+    en: 'Passwords do not match.',
+  },
+  register_illustration_label: {
+    id: 'Ilustrasi catatan dan daun',
+    en: 'Illustration of a note and leaves',
+  },
   register_submit: { id: 'Daftar', en: 'Register' },
   register_creating: { id: 'Membuat akun', en: 'Creating account' },
-  register_has_account: { id: 'Sudah punya akun?', en: 'Already have an account?' },
+  register_has_account: {
+    id: 'Sudah punya akun?',
+    en: 'Already have an account?',
+  },
   register_login_link: { id: 'Masuk', en: 'Login' },
+  theme_group_label: { id: 'Pilihan tema', en: 'Theme options' },
+  theme_light_label: { id: 'Tema terang', en: 'Light theme' },
+  theme_dark_label: { id: 'Tema gelap', en: 'Dark theme' },
+  language_toggle_label: { id: 'Ubah bahasa', en: 'Change language' },
 
   // --- NotFound ---
   notfound_title: { id: 'Halaman Tidak Ditemukan', en: 'Page Not Found' },
@@ -151,4 +229,3 @@ const translations = {
 };
 
 export default translations;
-

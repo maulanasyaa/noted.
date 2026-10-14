@@ -1,6 +1,9 @@
 import { NotebookPen } from 'lucide-react';
 
+import useLanguage from '../hooks/useLanguage';
+
 function AuthLoading() {
+  const { t } = useLanguage();
   return (
     <main
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background"
@@ -45,11 +48,11 @@ function AuthLoading() {
         </h1>
 
         <p className="mt-3 text-base font-medium text-text-secondary">
-          Checking your space...
+          {t('auth_loading_status')}
         </p>
 
         <p className="mt-1.5 max-w-xs text-sm leading-6 text-text-muted">
-          Making sure everything is ready for your thoughts.
+          {t('auth_loading_description')}
         </p>
 
         {/* Loading dots */}

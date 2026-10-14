@@ -1,15 +1,17 @@
 import { Moon, Sun } from 'lucide-react';
 
+import useLanguage from '../hooks/useLanguage';
 import useTheme from '../hooks/useTheme';
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
+  const { t } = useLanguage();
 
   return (
     <div
       role="group"
-      aria-label="Pilihan tema"
+      aria-label={t('theme_group_label')}
       className="relative grid h-10 w-19 grid-cols-2 items-center rounded-full border border-border bg-surface-hover p-0.75"
     >
       {/* Sliding indicator */}
@@ -26,7 +28,7 @@ function ThemeToggle() {
         onClick={() => {
           if (isDark) toggleTheme();
         }}
-        aria-label="Tema terang"
+        aria-label={t('theme_light_label')}
         aria-pressed={!isDark}
         className={`relative z-10 flex size-8 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           !isDark ? 'text-icon' : 'text-text-muted'
@@ -41,7 +43,7 @@ function ThemeToggle() {
         onClick={() => {
           if (!isDark) toggleTheme();
         }}
-        aria-label="Tema gelap"
+        aria-label={t('theme_dark_label')}
         aria-pressed={isDark}
         className={`relative z-10 flex size-8 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           isDark ? 'text-icon' : 'text-text-muted'

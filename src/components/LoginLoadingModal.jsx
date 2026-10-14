@@ -14,7 +14,7 @@ function LoginLoadingModal() {
         role="status"
         aria-live="polite"
         aria-busy="true"
-        aria-label="Sedang memproses login"
+        aria-label={t('login_loading_label')}
         className="w-full max-w-sm rounded-3xl border border-border bg-background px-8 py-9 text-center shadow-2xl animate-modal-in"
       >
         {/* Orbit animation */}

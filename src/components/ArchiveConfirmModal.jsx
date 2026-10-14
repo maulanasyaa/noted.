@@ -1,6 +1,12 @@
 import useLanguage from '../hooks/useLanguage';
 
-function ArchiveConfirmModal({ archived, description, onConfirm, onCancel }) {
+function ArchiveConfirmModal({
+  archived,
+  description,
+  onConfirm,
+  onCancel,
+  isLoading = false,
+}) {
   const { t } = useLanguage();
 
   const fallbackDescription = archived
@@ -9,7 +15,7 @@ function ArchiveConfirmModal({ archived, description, onConfirm, onCancel }) {
 
   return (
     <div
-      onClick={onCancel}
+      onClick={isLoading ? undefined : onCancel}
       className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
     >
       <div
@@ -25,15 +31,21 @@ function ArchiveConfirmModal({ archived, description, onConfirm, onCancel }) {
         <div className="mt-4 flex justify-end gap-4">
           <button
             onClick={onCancel}
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-all"
+            disabled={isLoading}
+            className="bg-surface-hover text-text-primary px-4 py-2 rounded-lg hover:bg-primary-soft transition-all disabled:cursor-not-allowed disabled:opacity-60"
           >
             {t('button_cancel')}
           </button>
           <button
             onClick={onConfirm}
-            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-all"
+            disabled={isLoading}
+            className="bg-primary text-text-on-primary px-4 py-2 rounded-lg hover:bg-primary-hover transition-all disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {archived ? t('button_unarchive') : t('button_archive')}
+            {isLoading
+              ? t('button_processing')
+              : archived
+                ? t('button_unarchive')
+                : t('button_archive')}
           </button>
         </div>
       </div>

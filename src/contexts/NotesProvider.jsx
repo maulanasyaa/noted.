@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import useAuth from '../hooks/useAuth';
 import {
@@ -61,60 +61,81 @@ function NotesProvider({ children }) {
   }, []);
 
   // add note
-  const addNote = async (data) => {
-    const result = await addNoteData(data);
-    if (!result.error) {
-      await refreshNotes();
-    }
+  const addNote = useCallback(
+    async (data) => {
+      const result = await addNoteData(data);
+      if (!result.error) {
+        await refreshNotes();
+      }
 
-    return result;
-  };
+      return result;
+    },
+    [refreshNotes]
+  );
 
   // get note for detail page
-  const getNote = async (id) => {
-    const note = await getNoteData(id);
-    if (!note.error) {
-      return note.data;
-    }
-  };
+  const getNote = useCallback(async (id) => {
+    return getNoteData(id);
+  }, []);
 
   // archive note
-  const archiveNote = async (id) => {
-    const result = await archiveNoteData(id);
-    if (!result.error) {
-      await refreshNotes();
-    }
-    return result;
-  };
+  const archiveNote = useCallback(
+    async (id) => {
+      const result = await archiveNoteData(id);
+      if (!result.error) {
+        await refreshNotes();
+      }
+      return result;
+    },
+    [refreshNotes]
+  );
 
   // unarchive note
-  const unarchiveNote = async (id) => {
-    const result = await unarchiveNoteData(id);
-    if (!result.error) {
-      await refreshNotes();
-    }
-    return result;
-  };
+  const unarchiveNote = useCallback(
+    async (id) => {
+      const result = await unarchiveNoteData(id);
+      if (!result.error) {
+        await refreshNotes();
+      }
+      return result;
+    },
+    [refreshNotes]
+  );
 
   // delete note
-  const deleteNote = async (id) => {
-    const result = await deleteNoteData(id);
-    if (!result.error) {
-      await refreshNotes();
-    }
-    return result;
-  };
+  const deleteNote = useCallback(
+    async (id) => {
+      const result = await deleteNoteData(id);
+      if (!result.error) {
+        await refreshNotes();
+      }
+      return result;
+    },
+    [refreshNotes]
+  );
 
-  const value = {
-    activeNotes,
-    archivedNotes,
-    isLoading,
-    getNote,
-    addNote,
-    deleteNote,
-    archiveNote,
-    unarchiveNote,
-  };
+  const value = useMemo(
+    () => ({
+      activeNotes,
+      archivedNotes,
+      isLoading,
+      getNote,
+      addNote,
+      deleteNote,
+      archiveNote,
+      unarchiveNote,
+    }),
+    [
+      activeNotes,
+      archivedNotes,
+      isLoading,
+      getNote,
+      addNote,
+      deleteNote,
+      archiveNote,
+      unarchiveNote,
+    ]
+  );
 
   return (
     <NotesContext.Provider value={value}>{children}</NotesContext.Provider>

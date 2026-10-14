@@ -1,10 +1,13 @@
 import { Sparkles } from 'lucide-react';
 
+import useLanguage from '../hooks/useLanguage';
+
 function NoteDetailLoader() {
+  const { t } = useLanguage();
   return (
     <main
       role="status"
-      aria-label="Sedang memuat detail catatan"
+      aria-label={t('note_loading_label')}
       aria-busy="true"
       className="flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6"
     >
@@ -44,12 +47,12 @@ function NoteDetailLoader() {
       {/* Loading text */}
       <div className="text-center">
         <h2 className="text-2xl font-bold tracking-tight text-text-primary">
-          Gathering your thoughts
+          {t('note_loading_title')}
           <span className="animate-dots">...</span>
         </h2>
 
         <p className="mt-3 text-sm text-text-secondary">
-          Just a little moment while we find your notes ✨
+          {t('note_loading_description')}
         </p>
       </div>
 
@@ -60,7 +63,7 @@ function NoteDetailLoader() {
         <span className="h-2.5 w-2.5 rounded-full bg-[#A18A6F] animate-loading-dot [animation-delay:360ms]" />
       </div>
 
-      <span className="sr-only">Sedang mengambil data catatan...</span>
+      <span className="sr-only">{t('note_loading_sr')}</span>
     </main>
   );
 }

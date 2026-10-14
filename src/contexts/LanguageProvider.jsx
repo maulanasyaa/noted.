@@ -40,7 +40,10 @@ function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(readSavedLanguage);
 
   useEffect(() => {
-    if (language) saveLanguage(language);
+    const activeLanguage = language ?? 'id';
+    saveLanguage(activeLanguage);
+    document.documentElement.lang = activeLanguage;
+    document.title = translate(activeLanguage, 'document_title');
   }, [language]);
 
   const toggleLanguage = useCallback(() => {

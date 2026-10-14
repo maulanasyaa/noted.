@@ -1,13 +1,20 @@
+import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
+
+import LogoutConfirmModal from '../components/LogoutConfirmModal';
 import Sidebar from '../components/Sidebar';
+import useAuth from '../hooks/useAuth';
 import useLanguage from '../hooks/useLanguage';
 
 function NotFound() {
   const { t } = useLanguage();
+  const { handleLogout } = useAuth();
+  const [confirmLogout, setConfirmLogout] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar />
+      <Sidebar handleLogout={() => setConfirmLogout(true)} />
       <main className="flex min-w-0 flex-1 items-center justify-center px-6">
         <div className="w-full max-w-lg text-center">
           {/* Illustration */}
@@ -118,7 +125,7 @@ function NotFound() {
                 rounded-xl
                 bg-primary
                 px-5 py-2.5
-                text-sm font-semibold text-white
+                text-sm font-semibold text-text-on-primary
                 shadow-sm
                 transition-all duration-200
                 hover:-translate-y-0.5
@@ -136,6 +143,12 @@ function NotFound() {
           </div>
         </div>
       </main>
+      {confirmLogout && (
+        <LogoutConfirmModal
+          onConfirm={handleLogout}
+          onCancel={() => setConfirmLogout(false)}
+        />
+      )}
     </div>
   );
 }

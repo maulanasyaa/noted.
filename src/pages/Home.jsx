@@ -15,9 +15,12 @@ import useNotes from '../hooks/useNotes';
 
 function Home() {
   // notes data
-  const { addNote, deleteNote, archiveNote, activeNotes, isLoading } = useNotes();
+  const { addNote, deleteNote, archiveNote, activeNotes, isLoading } =
+    useNotes();
   const { t } = useLanguage();
   const [modalAddNote, setModalAddNote] = useState(false);
+  const [actionError, setActionError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,14 +42,23 @@ function Home() {
     setModalAddNote(true);
   };
 
-  const handleAddNoteSubmit = (e) => {
+  const handleAddNoteSubmit = async (e) => {
     e.preventDefault();
 
-    addNote({ title: noteTitle, body: noteBody });
+    setActionError('');
+    setIsSubmitting(true);
+    const result = await addNote({ title: noteTitle, body: noteBody });
+
+    if (result.error) {
+      setActionError(result.message);
+      setIsSubmitting(false);
+      return;
+    }
 
     setModalAddNote(false);
     setNoteTitle('');
     setNoteBody('');
+    setIsSubmitting(false);
   };
 
   // delete note
@@ -58,10 +70,20 @@ function Home() {
     setConfirmationDeleteModal(true);
   };
 
-  const confirmDeleteNote = () => {
-    deleteNote(noteIdToDelete);
+  const confirmDeleteNote = async () => {
+    setActionError('');
+    setIsSubmitting(true);
+    const result = await deleteNote(noteIdToDelete);
+
+    if (result.error) {
+      setActionError(result.message);
+      setIsSubmitting(false);
+      return;
+    }
+
     setConfirmationDeleteModal(false);
     setNoteIdToDelete(null);
+    setIsSubmitting(false);
   };
 
   // archive note
@@ -74,10 +96,20 @@ function Home() {
     setConfirmationArchiveModal(true);
   };
 
-  const confirmArchiveNote = () => {
-    archiveNote(noteIdToArchive);
+  const confirmArchiveNote = async () => {
+    setActionError('');
+    setIsSubmitting(true);
+    const result = await archiveNote(noteIdToArchive);
+
+    if (result.error) {
+      setActionError(result.message);
+      setIsSubmitting(false);
+      return;
+    }
+
     setConfirmationArchiveModal(false);
     setNoteIdToArchive(null);
+    setIsSubmitting(false);
   };
 
   // logout account
@@ -98,6 +130,11 @@ function Home() {
           showAddButton={true}
         />
         <main>
+          {actionError && (
+            <p className="mb-4 rounded-lg border border-red-500 p-3 text-sm text-red-500">
+              {actionError}
+            </p>
+          )}
           {isLoading ? (
             <NotesLoading />
           ) : (
@@ -114,7 +151,9 @@ function Home() {
       {/* modal add note */}
       {modalAddNote && (
         <div
-          onClick={() => setModalAddNote(false)}
+          onClick={() => {
+            if (!isSubmitting) setModalAddNote(false);
+          }}
           className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
         >
           <div
@@ -131,14 +170,30 @@ function Home() {
               onSubmit={handleAddNoteSubmit}
               className="mt-4 flex flex-col gap-4"
             >
+              <label
+                htmlFor="note-title"
+                className="text-sm font-medium text-text-secondary"
+              >
+                {t('add_note_field_title')}
+              </label>
               <input
+                id="note-title"
+                name="title"
                 type="text"
                 placeholder={t('add_note_field_title')}
                 value={noteTitle}
                 onChange={(e) => setNoteTitle(e.target.value)}
                 className="border border-border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
+              <label
+                htmlFor="note-body"
+                className="text-sm font-medium text-text-secondary"
+              >
+                {t('add_note_field_body')}
+              </label>
               <textarea
+                id="note-body"
+                name="body"
                 placeholder={t('add_note_field_body')}
                 value={noteBody}
                 onChange={(e) => setNoteBody(e.target.value)}
@@ -146,9 +201,10 @@ function Home() {
               />
               <button
                 type="submit"
-                className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition-all"
+                disabled={isSubmitting}
+                className="bg-primary text-text-on-primary px-4 py-2 rounded-lg hover:bg-primary-hover transition-all disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {t('add_note_submit')}
+                {isSubmitting ? t('button_processing') : t('add_note_submit')}
               </button>
             </form>
           </div>
@@ -159,6 +215,7 @@ function Home() {
       {confirmationDeleteModal && (
         <DeleteConfirmModal
           onConfirm={confirmDeleteNote}
+          isLoading={isSubmitting}
           onCancel={() => setConfirmationDeleteModal(false)}
         />
       )}
@@ -168,6 +225,7 @@ function Home() {
         <ArchiveConfirmModal
           archived={false}
           onConfirm={confirmArchiveNote}
+          isLoading={isSubmitting}
           onCancel={() => setConfirmationArchiveModal(false)}
         />
       )}

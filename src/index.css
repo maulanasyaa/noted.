@@ -13,6 +13,7 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-text-on-primary: var(--text-on-primary);
 
   --color-border: var(--border);
   --color-icon: var(--icon);
@@ -43,6 +44,7 @@
   --text-primary: #2f2a25;
   --text-secondary: #6f6861;
   --text-muted: #958d85;
+  --text-on-primary: #ffffff;
 
   /* Border */
   --border: #e0d8cf;
@@ -76,6 +78,7 @@
   --text-primary: #f3eee8;
   --text-secondary: #c0b5aa;
   --text-muted: #92867b;
+  --text-on-primary: #1c1a18;
 
   /* Border */
   --border: #403a34;

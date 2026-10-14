@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
-import GlobalThemeToggle from './components/GlobalThemeToggle';
 import GlobalLanguageToggle from './components/GlobalLanguageToggle';
+import GlobalThemeToggle from './components/GlobalThemeToggle';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicOnlyRoute from './components/PublicOnlyRoute';
 import Archive from './pages/Archive';
@@ -22,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/notes/:id" element={<NoteDetail />} />
           <Route path="/archive" element={<Archive />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* public only routes */}
@@ -29,9 +30,6 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
         </Route>
-
-        {/* not found route */}
-        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

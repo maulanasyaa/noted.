@@ -15,7 +15,10 @@ function NotesLoading() {
       aria-label={label}
       className="flex w-full flex-col items-center justify-center gap-4 py-20"
     >
-      <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
+      <Loader2
+        className="h-8 w-8 animate-spin text-primary"
+        aria-hidden="true"
+      />
 
       <p className="text-sm font-medium text-text-muted">
         {label}

@@ -24,6 +24,7 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   //   state for form fields
   const [fullName, onFullNameChange] = useInput('');
@@ -35,18 +36,22 @@ function Register() {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordMatchError(true);
+      setErrorMessage(t('register_password_mismatch'));
       setTimeout(() => {
         setPasswordMatchError(false);
       }, 2000);
       return;
     }
 
+    setErrorMessage('');
     setIsLoading(true);
 
     try {
-      const { error } = await register({ name: fullName, email, password });
-      if (!error) {
+      const result = await register({ name: fullName, email, password });
+      if (!result.error) {
         navigate('/login');
+      } else {
+        setErrorMessage(result.message);
       }
     } catch (error) {
       console.error('Register failed:', error);
@@ -102,7 +107,7 @@ function Register() {
             fill="none"
             className="mb-6 w-72 animate-float"
             role="img"
-            aria-label="Illustration of a note and leaves"
+            aria-label={t('register_illustration_label')}
           >
             {/* Organic background */}
             <path
@@ -178,6 +183,9 @@ function Register() {
           </h1>
 
           <p className="mt-4 max-w-md text-lg leading-7 text-text-secondary">
+            {t('register_intro_description')}
+          </p>
+          <p className="mt-4 max-w-md text-lg leading-7 text-text-secondary">
             {t('register_intro_extra')}
           </p>
         </section>
@@ -187,7 +195,14 @@ function Register() {
           <h2 className="text-2xl font-semibold text-text-primary mb-2">
             {t('register_form_title')}
           </h2>
-          <p className="text-text-muted mb-8">{t('register_form_description')}</p>
+          <p className="text-text-muted mb-8">
+            {t('register_form_description')}
+          </p>
+          {errorMessage && (
+            <p className="mb-4 rounded-lg border border-red-500 p-3 text-sm text-red-500">
+              {errorMessage}
+            </p>
+          )}
           <form action="submit" onSubmit={handleSubmit}>
             {/* full name field */}
             <div className="flex flex-col gap-2 mb-3">
@@ -306,11 +321,14 @@ function Register() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-80"
+              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-text-on-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-80"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 inline-block animate-spin" size={16} />
+                  <Loader2
+                    className="mr-2 inline-block animate-spin"
+                    size={16}
+                  />
                   {t('register_creating')}
                 </>
               ) : (

@@ -16,6 +16,8 @@ import useNotes from '../hooks/useNotes';
 function Archive() {
   const { deleteNote, unarchiveNote, archivedNotes, isLoading } = useNotes();
   const { t } = useLanguage();
+  const [actionError, setActionError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,10 +40,20 @@ function Archive() {
     setConfirmationDeleteModal(true);
   };
 
-  const confirmDeleteNote = () => {
-    deleteNote(noteIdToDelete);
+  const confirmDeleteNote = async () => {
+    setActionError('');
+    setIsSubmitting(true);
+    const result = await deleteNote(noteIdToDelete);
+
+    if (result.error) {
+      setActionError(result.message);
+      setIsSubmitting(false);
+      return;
+    }
+
     setConfirmationDeleteModal(false);
     setNoteIdToDelete(null);
+    setIsSubmitting(false);
   };
 
   // unarchive note
@@ -54,10 +66,20 @@ function Archive() {
     setConfirmationUnarchiveModal(true);
   };
 
-  const confirmUnarchiveNote = () => {
-    unarchiveNote(noteIdToUnarchive);
+  const confirmUnarchiveNote = async () => {
+    setActionError('');
+    setIsSubmitting(true);
+    const result = await unarchiveNote(noteIdToUnarchive);
+
+    if (result.error) {
+      setActionError(result.message);
+      setIsSubmitting(false);
+      return;
+    }
+
     setConfirmationUnarchiveModal(false);
     setNoteIdToUnarchive(null);
+    setIsSubmitting(false);
   };
 
   // logout account
@@ -77,6 +99,11 @@ function Archive() {
           showAddButton={false}
         />
         <main>
+          {actionError && (
+            <p className="mb-4 rounded-lg border border-red-500 p-3 text-sm text-red-500">
+              {actionError}
+            </p>
+          )}
           {isLoading ? (
             <NotesLoading />
           ) : (
@@ -94,6 +121,7 @@ function Archive() {
       {confirmationDeleteModal && (
         <DeleteConfirmModal
           onConfirm={confirmDeleteNote}
+          isLoading={isSubmitting}
           onCancel={() => setConfirmationDeleteModal(false)}
         />
       )}
@@ -104,6 +132,7 @@ function Archive() {
           archived
           description={t('unarchive_description')}
           onConfirm={confirmUnarchiveNote}
+          isLoading={isSubmitting}
           onCancel={() => setConfirmationUnarchiveModal(false)}
         />
       )}

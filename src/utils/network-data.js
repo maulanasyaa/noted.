@@ -30,8 +30,7 @@ async function login({ email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -49,8 +48,7 @@ async function register({ name, email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
-    return { error: true };
+    return { error: true, message: responseJson.message };
   }
 
   return { error: false };
@@ -61,7 +59,7 @@ async function getUserLogged() {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -79,7 +77,7 @@ async function addNote({ title, body }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -90,7 +88,7 @@ async function getActiveNotes() {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -101,7 +99,7 @@ async function getArchivedNotes() {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -112,7 +110,7 @@ async function getNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -126,7 +124,7 @@ async function archiveNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -140,7 +138,7 @@ async function unarchiveNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };
@@ -154,7 +152,7 @@ async function deleteNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
   return { error: false, data: responseJson.data };

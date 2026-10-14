@@ -1,7 +1,13 @@
 import { useState } from 'react';
 
-import { NotebookPen } from 'lucide-react';
-import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
+import {
+  ArrowRight,
+  Eye,
+  EyeOff,
+  LockKeyhole,
+  Mail,
+  NotebookPen,
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import LoginLoadingModal from '../components/LoginLoadingModal';
@@ -19,6 +25,7 @@ function Login() {
   const [password, onPasswordChange] = useInput('');
 
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -26,9 +33,10 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const { error } = await login({ email, password });
+      const result = await login({ email, password });
 
-      if (error) {
+      if (result.error) {
+        setErrorMessage(result.message);
         return;
       }
 
@@ -87,7 +95,7 @@ function Login() {
             fill="none"
             className="mb-6 w-80 animate-float"
             role="img"
-            aria-label="Notebook, pen, and plant illustration"
+            aria-label={t('login_illustration_label')}
           >
             {/* Organic background */}
             <path
@@ -189,6 +197,11 @@ function Login() {
             {t('login_form_title')}
           </h2>
           <p className="text-text-muted mb-8">{t('login_form_description')}</p>
+          {errorMessage && (
+            <p className="mb-4 rounded-lg border border-red-500 p-3 text-sm text-red-500">
+              {errorMessage}
+            </p>
+          )}
           <form action="submit" onSubmit={handleSubmit}>
             {/* email field */}
             <div className="flex flex-col gap-2 mb-3">
@@ -243,7 +256,8 @@ function Login() {
             {/* submit button */}
             <button
               type="submit"
-              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-text-on-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {t('login_submit')}
               <ArrowRight

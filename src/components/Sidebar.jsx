@@ -55,7 +55,7 @@ function Sidebar({ handleLogout }) {
         </div>
       </div>
       <button
-        className="flex items-center justify-center bg-primary text-md text-white rounded-lg h-8 cursor-pointer hover:bg-primary-hover transition-all gap-2"
+        className="flex items-center justify-center bg-primary text-md text-text-on-primary rounded-lg h-8 cursor-pointer hover:bg-primary-hover transition-all gap-2"
         onClick={handleLogout}
       >
         {t('sidebar_logout')}
