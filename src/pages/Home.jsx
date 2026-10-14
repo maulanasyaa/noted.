@@ -7,13 +7,14 @@ import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import Header from '../components/Header';
 import LogoutConfirmModal from '../components/LogoutConfirmModal';
 import NoteList from '../components/NoteList';
+import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import useNotes from '../hooks/useNotes';
 
 function Home() {
   // notes data
-  const { addNote, deleteNote, archiveNote, activeNotes } = useNotes();
+  const { addNote, deleteNote, archiveNote, activeNotes, isLoading } = useNotes();
   const [modalAddNote, setModalAddNote] = useState(false);
 
   // state for search params
@@ -95,12 +96,16 @@ function Home() {
           showAddButton={true}
         />
         <main>
-          <NoteList
-            notes={filteredNotes}
-            emptyMessage="Tidak ada catatan"
-            onDelete={handleDeleteNote}
-            onArchive={handleArchiveNote}
-          />
+          {isLoading ? (
+            <NotesLoading />
+          ) : (
+            <NoteList
+              notes={filteredNotes}
+              emptyMessage="Tidak ada catatan"
+              onDelete={handleDeleteNote}
+              onArchive={handleArchiveNote}
+            />
+          )}
         </main>
       </div>
 

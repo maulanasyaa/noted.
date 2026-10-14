@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
+  Loader2,
   LockKeyhole,
   Mail,
   NotebookPen,
@@ -20,6 +21,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //   state for form fields
   const [fullName, onFullNameChange] = useInput('');
@@ -37,9 +39,17 @@ function Register() {
       return;
     }
 
-    const { error } = await register({ name: fullName, email, password });
-    if (!error) {
-      navigate('/login');
+    setIsLoading(true);
+
+    try {
+      const { error } = await register({ name: fullName, email, password });
+      if (!error) {
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Register failed:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -297,13 +307,23 @@ function Register() {
             {/* submit button */}
             <button
               type="submit"
-              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-80"
             >
-              Register
-              <ArrowRight
-                className="ml-2 inline-block animate-arrow-right"
-                size={16}
-              />
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 inline-block animate-spin" size={16} />
+                  Creating account
+                </>
+              ) : (
+                <>
+                  Register
+                  <ArrowRight
+                    className="ml-2 inline-block animate-arrow-right"
+                    size={16}
+                  />
+                </>
+              )}
             </button>
           </form>
           <hr className="my-4 border-border" />

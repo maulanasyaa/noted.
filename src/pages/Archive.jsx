@@ -7,12 +7,13 @@ import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import Header from '../components/Header';
 import LogoutConfirmModal from '../components/LogoutConfirmModal';
 import NoteList from '../components/NoteList';
+import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import useNotes from '../hooks/useNotes';
 
 function Archive() {
-  const { deleteNote, unarchiveNote, archivedNotes } = useNotes();
+  const { deleteNote, unarchiveNote, archivedNotes, isLoading } = useNotes();
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,12 +75,16 @@ function Archive() {
           showAddButton={false}
         />
         <main>
-          <NoteList
-            notes={filteredNotes}
-            emptyMessage="Arsip Kosong"
-            onDelete={handleDeleteNote}
-            onUnarchive={handleUnarchiveNote}
-          />
+          {isLoading ? (
+            <NotesLoading />
+          ) : (
+            <NoteList
+              notes={filteredNotes}
+              emptyMessage="Arsip Kosong"
+              onDelete={handleDeleteNote}
+              onUnarchive={handleUnarchiveNote}
+            />
+          )}
         </main>
       </div>
 

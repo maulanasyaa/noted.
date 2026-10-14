@@ -15,6 +15,7 @@ import NotesContext from './NotesContext';
 function NotesProvider({ children }) {
   const [activeNotes, setActiveNotes] = useState([]);
   const [archivedNotes, setArchivedNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // auth
   const { user } = useAuth();
@@ -26,14 +27,19 @@ function NotesProvider({ children }) {
       if (!userId) {
         setActiveNotes([]);
         setArchivedNotes([]);
+        setIsLoading(false);
         return;
       }
+
+      setIsLoading(true);
 
       const active = await getActiveNotesData();
       const archived = await getArchivedNotesData();
 
       if (!active.error) setActiveNotes(active.data);
       if (!archived.error) setArchivedNotes(archived.data);
+
+      setIsLoading(false);
     };
 
     loadNotes();
@@ -41,6 +47,8 @@ function NotesProvider({ children }) {
 
   // for refresh notes after actions
   const refreshNotes = useCallback(async () => {
+    setIsLoading(true);
+
     const [active, archived] = await Promise.all([
       getActiveNotesData(),
       getArchivedNotesData(),
@@ -48,6 +56,8 @@ function NotesProvider({ children }) {
 
     if (!active.error) setActiveNotes(active.data);
     if (!archived.error) setArchivedNotes(archived.data);
+
+    setIsLoading(false);
   }, []);
 
   // add note
@@ -98,6 +108,7 @@ function NotesProvider({ children }) {
   const value = {
     activeNotes,
     archivedNotes,
+    isLoading,
     getNote,
     addNote,
     deleteNote,
