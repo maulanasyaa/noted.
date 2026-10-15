@@ -48,6 +48,10 @@ const translations = {
     id: 'Catatan gagal dimuat. Silakan coba lagi.',
     en: 'The note could not be loaded. Please try again.',
   },
+  network_error: {
+    id: 'Terjadi masalah jaringan. Silakan coba lagi.',
+    en: 'A network error occurred. Please try again.',
+  },
   auth_loading_status: {
     id: 'Memeriksa ruang Anda...',
     en: 'Checking your space...',

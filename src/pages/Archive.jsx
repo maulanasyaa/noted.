@@ -11,13 +11,13 @@ import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import useLanguage from '../hooks/useLanguage';
+import useNoteAction from '../hooks/useNoteAction';
 import useNotes from '../hooks/useNotes';
 
 function Archive() {
   const { deleteNote, unarchiveNote, archivedNotes, isLoading } = useNotes();
   const { t } = useLanguage();
-  const [actionError, setActionError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { actionError, isSubmitting, executeAction } = useNoteAction();
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,19 +41,14 @@ function Archive() {
   };
 
   const confirmDeleteNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await deleteNote(noteIdToDelete);
+    const result = await executeAction(deleteNote, noteIdToDelete);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     setConfirmationDeleteModal(false);
     setNoteIdToDelete(null);
-    setIsSubmitting(false);
   };
 
   // unarchive note
@@ -67,19 +62,14 @@ function Archive() {
   };
 
   const confirmUnarchiveNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await unarchiveNote(noteIdToUnarchive);
+    const result = await executeAction(unarchiveNote, noteIdToUnarchive);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     setConfirmationUnarchiveModal(false);
     setNoteIdToUnarchive(null);
-    setIsSubmitting(false);
   };
 
   // logout account

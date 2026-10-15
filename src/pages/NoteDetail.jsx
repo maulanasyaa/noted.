@@ -10,6 +10,7 @@ import NoteDetailLoader from '../components/NoteDetailLoader';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import useLanguage from '../hooks/useLanguage';
+import useNoteAction from '../hooks/useNoteAction';
 import useNotes from '../hooks/useNotes';
 import { showFormattedDate } from '../utils';
 import NotFound from './NotFound';
@@ -65,58 +66,42 @@ function NoteDetailContent({ note }) {
   const { deleteNote, archiveNote, unarchiveNote } = useNotes();
   const { handleLogout } = useAuth();
   const { language } = useLanguage();
+  const { actionError, isSubmitting, executeAction } = useNoteAction();
 
   const [activeModal, setActiveModal] = useState(null);
-  const [actionError, setActionError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const closeModal = () => setActiveModal(null);
 
   const confirmDeleteNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await deleteNote(note.id);
+    const result = await executeAction(deleteNote, note.id);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     closeModal();
     navigate('/');
-    setIsSubmitting(false);
   };
 
   const confirmArchiveNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await archiveNote(note.id);
+    const result = await executeAction(archiveNote, note.id);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     closeModal();
     navigate('/archive');
-    setIsSubmitting(false);
   };
 
   const confirmUnarchiveNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await unarchiveNote(note.id);
+    const result = await executeAction(unarchiveNote, note.id);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     closeModal();
     navigate('/');
-    setIsSubmitting(false);
   };
 
   return (

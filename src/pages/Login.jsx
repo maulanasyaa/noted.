@@ -41,8 +41,8 @@ function Login() {
       }
 
       navigate('/', { replace: true });
-    } catch (error) {
-      console.error('Login failed:', error);
+    } catch {
+      setErrorMessage(t('network_error'));
     } finally {
       setIsLoading(false);
     }

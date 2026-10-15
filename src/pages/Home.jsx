@@ -11,6 +11,7 @@ import NotesLoading from '../components/NotesLoading';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import useLanguage from '../hooks/useLanguage';
+import useNoteAction from '../hooks/useNoteAction';
 import useNotes from '../hooks/useNotes';
 
 function Home() {
@@ -18,9 +19,8 @@ function Home() {
   const { addNote, deleteNote, archiveNote, activeNotes, isLoading } =
     useNotes();
   const { t } = useLanguage();
+  const { actionError, isSubmitting, executeAction } = useNoteAction();
   const [modalAddNote, setModalAddNote] = useState(false);
-  const [actionError, setActionError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // state for search params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,20 +45,18 @@ function Home() {
   const handleAddNoteSubmit = async (e) => {
     e.preventDefault();
 
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await addNote({ title: noteTitle, body: noteBody });
+    const result = await executeAction(addNote, {
+      title: noteTitle,
+      body: noteBody,
+    });
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     setModalAddNote(false);
     setNoteTitle('');
     setNoteBody('');
-    setIsSubmitting(false);
   };
 
   // delete note
@@ -71,19 +69,14 @@ function Home() {
   };
 
   const confirmDeleteNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await deleteNote(noteIdToDelete);
+    const result = await executeAction(deleteNote, noteIdToDelete);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     setConfirmationDeleteModal(false);
     setNoteIdToDelete(null);
-    setIsSubmitting(false);
   };
 
   // archive note
@@ -97,19 +90,14 @@ function Home() {
   };
 
   const confirmArchiveNote = async () => {
-    setActionError('');
-    setIsSubmitting(true);
-    const result = await archiveNote(noteIdToArchive);
+    const result = await executeAction(archiveNote, noteIdToArchive);
 
     if (result.error) {
-      setActionError(result.message);
-      setIsSubmitting(false);
       return;
     }
 
     setConfirmationArchiveModal(false);
     setNoteIdToArchive(null);
-    setIsSubmitting(false);
   };
 
   // logout account

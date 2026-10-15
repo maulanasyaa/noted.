@@ -53,8 +53,8 @@ function Register() {
       } else {
         setErrorMessage(result.message);
       }
-    } catch (error) {
-      console.error('Register failed:', error);
+    } catch {
+      setErrorMessage(t('network_error'));
     } finally {
       setIsLoading(false);
     }
